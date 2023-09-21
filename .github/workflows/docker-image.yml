@@ -11,6 +11,9 @@ jobs:
   build-and-push:
 
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
 
     steps:
     - uses: actions/checkout@v3
@@ -27,8 +30,5 @@ jobs:
       run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
 
     - name: Push Docker image to GitHub Container Registry
-      permissions:
-        contents: read
-        packages: write
       run: docker push ghcr.io/eldardl/directeam-project/argo-app:ci-pipeline
 
