@@ -8,11 +8,24 @@ on:
 
 jobs:
 
-  build:
+  build-and-push:
 
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
+
+    - name: Set up QEMU
+      run: |
+        docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+      shell: bash
+
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      run: docker build . --file Dockerfile --tag ghcr.io/your-username/your-repo/my-image-name:$(date +%s)
+
+    - name: Authenticate with GitHub Container Registry
+      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
+
+    - name: Push Docker image to GitHub Container Registry
+      run: docker push ghcr.io/EldarDL/directeam-project/argo-app:$(date +%s)
+
