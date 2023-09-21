@@ -24,6 +24,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: argo-app-service
+  data: test
 spec:
   selector:
     app: argo-app
