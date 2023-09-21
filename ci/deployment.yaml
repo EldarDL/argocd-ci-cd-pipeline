@@ -18,4 +18,20 @@ spec:
       imagePullSecrets: # Add this section
         - name: ghcr-docker-secret
 
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-app-service
+spec:
+  selector:
+    app: my-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+      nodePort: 31234
+  type: NodePort
+
 
