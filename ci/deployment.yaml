@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argo-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: argo-app
+  template:
+    metadata:
+      labels:
+        app: argo-app
+    spec:
+      containers:
+        - name: argo-app-container
+          image: ghcr.io/eldardl/directeam-project/argo-app:ci-pipeline
+
+
