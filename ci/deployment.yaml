@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: argo-app
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: argo-app
@@ -15,5 +15,7 @@ spec:
       containers:
         - name: argo-app-container
           image: ghcr.io/eldardl/directeam-project/argo-app:ci-pipeline
+      imagePullSecrets: # Add this section
+        - name: ghcr-docker-secret
 
 
