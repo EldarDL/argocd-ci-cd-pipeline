@@ -27,5 +27,5 @@ jobs:
       run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
 
     - name: Push Docker image to GitHub Container Registry
-      run: docker push ghcr.io/EldarDL/directeam-project/argo-app:$(date +%s)
+      run: docker push ghcr.io/eldardl/directeam-project/argo-app:$(date +%s)
 
