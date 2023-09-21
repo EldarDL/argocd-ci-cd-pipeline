@@ -26,7 +26,7 @@ metadata:
   name: my-app-service
 spec:
   selector:
-    app: my-app
+    app: argo-app
   ports:
     - protocol: TCP
       port: 80
