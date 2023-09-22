@@ -22,7 +22,7 @@ jobs:
       shell: bash
     - name: Build the Docker image
         # set image tag to the commit SHA that triggered the build
-      run: docker build . --file Dockerfile --tag ghcr.io/eldardl/directeam-project/argo-app:${{ github.sha }}#
+      run: docker build . --file Dockerfile --tag ghcr.io/eldardl/directeam-project/argo-app:${{ github.sha }}
 
     - name: Authenticate with GitHub Container Registry
       run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
