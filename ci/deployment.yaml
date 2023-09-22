@@ -25,13 +25,33 @@ kind: Service
 metadata:
   name: argo-app-service
 spec:
-  selector:
-    app: argo-app
-  ports:
+    type: ClusterIP
+    selector:
+        app: argo-app
+    ports:
     - protocol: TCP
       port: 8080
       targetPort: 8080
-      nodePort: 31200
-  type: NodePort
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argo-app-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+    rules:
+    - http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+          service:
+              name: argo-app-service
+              port:
+              number: 8080
+
 
 
