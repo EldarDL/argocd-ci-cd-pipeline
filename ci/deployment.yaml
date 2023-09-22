@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: argo-app-container
-          image: ghcr.io/eldardl/directeam-project/argo-app:ci-pipeline
+          image: ghcr.io/eldardl/directeam-project/argo-app:f81e321238f93cf60e5009b1c92bc587b2ab46fc
       imagePullSecrets:
         - name: ghcr-docker-secret
 
