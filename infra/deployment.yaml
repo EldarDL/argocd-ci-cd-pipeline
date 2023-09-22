@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: argo-app-container
-          image: ghcr.io/eldardl/directeam-project/argo-app:1e1d0bea035929103f621a4209f95cbc46a73672
+          image: ghcr.io/eldardl/directeam-project/argo-app:c6c7b2fb47fece190d06cd280dc66b29aa6eb6d9
           ports:
             - containerPort: 8080
       imagePullSecrets:
