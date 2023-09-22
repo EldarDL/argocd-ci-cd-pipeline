@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: argo-app-container
-          image: ghcr.io/eldardl/directeam-project/argo-app:864557c6a7eedda479c588c9fa16bd948a05948d
+          image: ghcr.io/eldardl/directeam-project/argo-app:564e9608706af3e11978ebf4d7853e53a9684832
       imagePullSecrets:
         - name: ghcr-docker-secret
 
