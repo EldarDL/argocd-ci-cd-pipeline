@@ -43,7 +43,7 @@ metadata:
   name: argo-app-ingress
 spec:
   rules:
-  - host: localhost
+  - host: argo-app.com
     http:
       paths:
       - path: /
@@ -52,6 +52,6 @@ spec:
           service:
             name: argo-app-service
             port:
-              number: 8000
+              number: 80
 
 
