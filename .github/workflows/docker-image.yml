@@ -52,7 +52,7 @@ jobs:
 
     - name: Commit manifest
       run: |
-        git config --global user.name "GitHub Actions"
+        git config --global user.name "EldarDL"
         git config --global user.email "eldar.dlot@gmail.com"
         git add ci/deployment.yaml
         git commit -m "Update manifest to ${{ github.sha }}"
