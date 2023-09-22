@@ -42,9 +42,7 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Update manifest
-      run: |
-        github_sha="${GITHUB_SHA}"
-        sed -i "s|\(.*ghcr\.io/eldardl/directeam-project/argo-app:\)[^/]*|\1${github_sha}|g"
+      run: sed -i "s|\(.*ghcr\.io/eldardl/directeam-project/argo-app:\)[^/]*|\1${{ github.sha }}|g"
 
     - name: Commit manifest
       run: |
