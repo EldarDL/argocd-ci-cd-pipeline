@@ -33,17 +33,22 @@ jobs:
   update-manifest:
 
     runs-on: ubuntu-latest
+    needs: build-and-push
     permissions:
       contents: read
       packages: write
 
     steps:
     - uses: actions/checkout@v3
+      with:
+        repository: eldardl/directeam-project
+        ref: main
+        token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Update manifest
       run: |
-        sed -i "s|ghcr.io/eldardl/directeam-project/argo-app:ci-pipeline|ghcr.io/eldardl/directeam-project/argo-app:${{ github.sha }}|" ci/deployment.yaml
-      shell: bash
+        sed -i "s#$ghcr.io.*#ghcr.io/eldardl/directeam-project/argo-app:${{ github.sha }}" ci/deployment.yaml
+        shell: bash
 
     - name: Commit manifest
       run: |
