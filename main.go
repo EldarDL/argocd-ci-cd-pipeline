@@ -30,7 +30,7 @@ func main() {
 		message := ""
 		user := r.Header.Get("X-Auth-Request-User")
 		if user == "" {
-			message = "No user header found"
+			message = "Hello World!"
 		} else {
 			message = fmt.Sprintf("Hello %s", user)
 		}
