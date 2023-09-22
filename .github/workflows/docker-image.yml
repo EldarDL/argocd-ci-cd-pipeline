@@ -43,7 +43,8 @@ jobs:
 
     - name: Update manifest
       run: |
-        sed -i 's|\(ghcr\.io/eldardl/directeam-project/argo-app:[^/]*\)/argo-app:ci-pipeline|\1|g' ci/deployment.yaml
+        github_sha="${GITHUB_SHA}"
+        sed -i "s|\(.*ghcr\.io/eldardl/directeam-project/argo-app:\)[^/]*|\1${github_sha}|g"
 
     - name: Commit manifest
       run: |
