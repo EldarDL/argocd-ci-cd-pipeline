@@ -14,21 +14,44 @@ jobs:
     permissions:
       contents: read
       packages: write
-
     steps:
     - uses: actions/checkout@v3
-
     - name: Set up QEMU
       run: |
         docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
       shell: bash
-
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag ghcr.io/eldardl/directeam-project/argo-app:ci-pipeline
+        # set image tag to the commit SHA that triggered the build
+      run: docker build . --file Dockerfile --tag ghcr.io/eldardl/directeam-project/argo-app:${{ github.sha }}#
 
     - name: Authenticate with GitHub Container Registry
       run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
 
-    - name: Push Docker image to GitHub Container Registry
-      run: docker push ghcr.io/eldardl/directeam-project/argo-app:ci-pipeline
+    - name: Push image to GitHub Container Registry
+      run: docker push ghcr.io/eldardl/directeam-project/argo-app:${{ github.sha }}
+
+  update-manifest:
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Update manifest
+      run: |
+        sed -i "s|ghcr.io/eldardl/directeam-project/argo-app:ci-pipeline|ghcr.io/eldardl/directeam-project/argo-app:${{ github.sha }}|" ci/deployment.yaml
+      shell: bash
+
+    - name: Commit manifest
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "eldar.dlot@gmail.com"
+        git add ci/deployment.yaml
+        git commit -m "Update manifest to ${{ github.sha }}"
+        git push
+        shell: bash
+
 
