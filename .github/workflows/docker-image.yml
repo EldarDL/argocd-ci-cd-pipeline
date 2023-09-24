@@ -47,7 +47,7 @@ jobs:
       run: |
         lowercase_repository=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')
         lowercase_sha=$(echo ${{ github.sha }} | tr '[:upper:]' '[:lower:]')
-        sed -i "s|\(.*ghcr\.io\)/[^/]*/[^:]*:\([^/]*\)|\1/ghcr.io/${lowercase_repository}:${lowercase_sha}|g" infra/deployment.yaml
+        sed -i "s|\(.*ghcr\.io\)/[^/]*/[^:]*:\([^/]*\)|\1/${lowercase_repository}:${lowercase_sha}|g" infra/deployment.yaml
 
     - name: Commit manifest
       run: |
