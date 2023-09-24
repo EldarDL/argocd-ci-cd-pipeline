@@ -21,12 +21,18 @@ jobs:
         docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
       shell: bash
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag "ghcr.io/${{ github.repository | lower }}:${{ github.sha | lower }}"
+      run: |
+        lowercase_repository=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')
+        lowercase_sha=$(echo ${{ github.sha }} | tr '[:upper:]' '[:lower:]')
+        docker build . --file Dockerfile --tag "ghcr.io/$lowercase_repository:$lowercase_sha"
     - name: Authenticate with GitHub Container Registry
       run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
 
     - name: Push image to GitHub Container Registry
-      run: docker push "ghcr.io/${{ github.repository | lower }}:${{ github.sha | lower }}"
+      run: | 
+        lowercase_repository=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')
+        lowercase_sha=$(echo ${{ github.sha }} | tr '[:upper:]' '[:lower:]')
+        docker push "ghcr.io/$lowercase_repository:$lowercase_sha"
 
   update-manifest:
 
@@ -41,8 +47,9 @@ jobs:
 
     - name: Update manifest
       run: |
-        echo ${{ github.repository }}
-        sed -i 's|\(.*ghcr\.io\)/[^/]*/[^:]*:\([^/]*\)|\1/ghcr.io/${{ github.repository | lower }}:${{ github.sha | lower }}|g' infra/deployment.yaml
+        lowercase_repository=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')
+        lowercase_sha=$(echo ${{ github.sha }} | tr '[:upper:]' '[:lower:]')
+        sed -i "s|\(.*ghcr\.io\)/[^/]*/[^:]*:\([^/]*\)|\1/ghcr.io/${lowercase_repository}:${lowercase_sha}|g" infra/deployment.yaml
 
     - name: Commit manifest
       run: |
