@@ -21,12 +21,12 @@ jobs:
         docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
       shell: bash
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag ${{ env.IMAGE_TAG }}
+      run: docker build . --file Dockerfile --tag $IMAGE_TAG
     - name: Authenticate with GitHub Container Registry
       run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
 
     - name: Push image to GitHub Container Registry
-      run: docker push ${{ env.IMAGE_TAG }}
+      run: docker push $IMAGE_TAG
 
   update-manifest:
 
@@ -42,7 +42,7 @@ jobs:
     - name: Update manifest
       run: |
         echo ${{ github.repository }}
-        sed -i "s|\(.*ghcr\.io\)/[^/]*/[^:]*:\([^/]*\)|\1/${{ env.IMAGE_TAG }}|g" infra/deployment.yaml
+        sed -i "s|\(.*ghcr\.io\)/[^/]*/[^:]*:\([^/]*\)|\1/$IMAGE_TAG|g" infra/deployment.yaml
 
     - name: Commit manifest
       run: |
