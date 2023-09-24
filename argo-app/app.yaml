@@ -10,7 +10,7 @@ spec:
     server: 'https://kubernetes.default.svc'
   source:
     path: infra
-    repoURL: 'git@github.com:<your-github-account>/<your-github-repo>.git'
+    repoURL: 'git@github.com:EldarDL/argocd-ci-cd-pipeline.git'
     targetRevision: HEAD
   project: default
   syncPolicy:

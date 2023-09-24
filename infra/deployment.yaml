@@ -14,42 +14,8 @@ spec:
     spec:
       containers:
         - name: argo-app-container
-          image: ghcr.io/<your-github-account>/<your-github-repo>/argo-app:c6c7b2fb47fece190d06cd280dc66b29aa6eb6d9
+          image: ghcr.io/EldarDL/argocd-ci-cd-pipeline/argo-app:c6c7b2fb47fece190d06cd280dc66b29aa6eb6d9
           ports:
             - containerPort: 8080
       imagePullSecrets:
         - name: ghcr-docker-secret
-
----
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: argo-app-service
-spec:
-  selector:
-    app: argo-app
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 8080
-
----
-
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: argo-app-ingress
-spec:
-  rules:
-    - host: argo-app.com
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: argo-app-service
-                port:
-                  number: 80
-
