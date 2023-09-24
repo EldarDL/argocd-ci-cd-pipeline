@@ -40,7 +40,8 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Update manifest
-      run: sed 's|ghcr.io/.*|ghcr.io/'"$(echo '{{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')/$(echo '{{ github.repository }}' | tr '[:upper:]' '[:lower:]'):${{ github.sha }}"'|' infra/deployment.yaml
+      run: sed -i 's|ghcr.io/.*|ghcr.io/'"$(echo '{{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')/$(echo '{{ github.repository }}' | tr '[:upper:]' '[:lower:]'):${{ github.sha }}"'|' infra/deployment.yaml
+
 
     - name: Commit manifest
       run: |
