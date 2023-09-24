@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: argo-app-container
-          image: ghcr.io/ghcr.io/ghcr.io/ghcr.io/eldardl/argocd-ci-cd-pipeline:9038771379029a670af718540abea5bce709ae89
+          image: ghcr.io/ghcr.io/ghcr.io/ghcr.io/eldardl/argocd-ci-cd-pipeline:ade8db612466d4591755df9ebc5bc3b029d844d4
           ports:
             - containerPort: 8080
       imagePullSecrets:
