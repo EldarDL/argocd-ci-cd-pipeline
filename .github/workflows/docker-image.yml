@@ -41,6 +41,7 @@ jobs:
 
     - name: Update manifest
       run: |
+        echo ${{ github.repository }}
         sed -i 's|image: ghcr.io/${{ github.repository }}:.*|image: ghcr.io/${{ github.repository }}:${{ github.sha }}|' infra/deployment.yaml
 
     - name: Commit manifest
