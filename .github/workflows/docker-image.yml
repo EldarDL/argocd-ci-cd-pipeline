@@ -42,7 +42,7 @@ jobs:
     - name: Update manifest
       run: |
         echo ${{ github.repository }}
-        sed -i "s|\(.*ghcr\.io\)/[^/]*/[^:]*:\([^/]*\)|\1/ghcr.io/${{ github.repository }}:${{ github.sha }}" | tr '[:upper:]' '[:lower:]'|g" infra/deployment.yaml
+        sed -i "s|\(.*ghcr\.io\)/[^/]*/[^:]*:\([^/]*\)|\1/"ghcr.io/${{ github.repository }}:${{ github.sha }}" | tr '[:upper:]' '[:lower:]'|g" infra/deployment.yaml
 
     - name: Commit manifest
       run: |
