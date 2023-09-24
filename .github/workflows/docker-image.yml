@@ -36,8 +36,6 @@ jobs:
 
     runs-on: ubuntu-latest
     needs: build-and-push
-    env:
-      image_tag: ghcr.io/$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]'):$(echo ${{ github.sha }} | tr '[:upper:]' '[:lower:]')
     steps:
     - uses: actions/checkout@v3
       with:
@@ -47,7 +45,9 @@ jobs:
 
     - name: Update manifest
       run: |
-        sed -i "s|\(.*ghcr\.io\)/[^/]*/[^:]*:\([^/]*\)|\1/${{ env.image_tag }}|g" infra/deployment.yaml 
+        lowercase_repository=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')
+        lowercase_sha=$(echo ${{ github.sha }} | tr '[:upper:]' '[:lower:]')
+        sed -i "s|\(.*ghcr\.io\)/[^/]*/[^:]*:\([^/]*\)|\1/ghcr.io/${lowercase_repository}:${lowercase_sha}|g" infra/deployment.yaml
 
     - name: Commit manifest
       run: |
