@@ -1,4 +1,4 @@
-![Build Status](https://github.com/EldarDL/directeam-project/actions/workflows/docker-image.yml/badge.svg)
+![Build Status](https://github.com/EldarDL/argocd-ci-cd-pipeline/actions/workflows/docker-image.yml/badge.svg)
 
 # Setting Up an Application with ArgoCD and Minikube
 
@@ -104,3 +104,4 @@
       ```
       127.0.0.1     argo-app.com
       ```
+      

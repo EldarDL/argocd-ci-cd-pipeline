@@ -22,13 +22,13 @@ jobs:
       shell: bash
     - name: Build the Docker image
         # set image tag to the commit SHA that triggered the build
-      run: docker build . --file Dockerfile --tag ghcr.io/eldardl/directeam-project/argo-app:${{ github.sha }}
+      run: docker build . --file Dockerfile --tag ghcr.io/<your-github-account>/<your-github-repo>/argo-app:${{ github.sha }}
 
     - name: Authenticate with GitHub Container Registry
       run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
 
     - name: Push image to GitHub Container Registry
-      run: docker push ghcr.io/eldardl/directeam-project/argo-app:${{ github.sha }}
+      run: docker push ghcr.io/<your-github-account>/<your-github-repo>/argo-app:${{ github.sha }}
 
   update-manifest:
 
@@ -37,17 +37,17 @@ jobs:
     steps:
     - uses: actions/checkout@v3
       with:
-        repository: EldarDL/directeam-project
+        repository: <your-github-account>/<your-github-repo>
         ref: master
         token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Update manifest
-      run: sed -i "s|\(.*ghcr\.io/eldardl/directeam-project/argo-app:\)[^/]*|\1${{ github.sha }}|g" infra/deployment.yaml
+      run: sed -i "s|\(.*ghcr\.io/<your-github-account>/<your-github-repo>/argo-app:\)[^/]*|\1${{ github.sha }}|g" infra/deployment.yaml
 
     - name: Commit manifest
       run: |
-          git config --global user.name "Eldar"
-          git config --global user.email "eldar.dlot@gmail.com"
+          git config --global user.name "<your-username>"
+          git config --global user.email "<your-email>"
           git add -A
           git commit -m "Update manifest to ${{ github.sha }}"
           git push
